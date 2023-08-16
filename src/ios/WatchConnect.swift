@@ -26,6 +26,13 @@ import WatchConnectivity
         var pluginResult: CDVPluginResult
         let keyString = command.arguments[0] as! String
         let valueString = command.arguments[1] as! AnyObject
+
+        if(self.wcsession == nil) {
+            pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "WKSESSION_NOT_DEFINED")
+            self.commandDelegate.send(pluginResult, callbackId: callbackId)
+            return
+        }
+        
         do {
             try self.wcsession.transferUserInfo([keyString : valueString])
         } catch {
